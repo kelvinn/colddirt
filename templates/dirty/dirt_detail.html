@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Cold Dirt | {{ dirt_object.dirtword }}{% endblock %}
+{% if dirt_object %}
+	{% block to_head %}
+		<link rel="alternate" type="application/rss+xml" title="Your Dirt" href="/feeds/mydirt/{{ dirt_object.dirtword }}/" />
+	{% endblock %}
+{% endif %}
+{% block content %}
+	<div id="leftContainer">
+		{% if dirt_object %}
+		<div class="row_clear">
+			<div class="dirtywordbig">{{ dirt_object.dirtword }}</div>
+			<div class="dirtydesc">
+				{{ dirt_object.description }}
+			</div>
+			<div class="dirtytags">
+				{% for tag in dirt_object.tags.all %}
+				   {% ifnotequal forloop.counter 1 %} | {% endifnotequal %}<a href="/tag/{{ tag.slug }}/">{{ tag.name }}</a>
+				{% endfor %}
+			</div>
+			(<a href="/report/{{ dirt_object.dirtword }}" class="report" rel="nofollow">Report This Dirt</a>)
+			<br /><br />
+			{% load comments %}
+			{% get_comment_count for dirty.dirt dirt_object.id as comment_count %}
+			{% get_comment_list for dirty.dirt dirt_object.id as comment_list %}
+
+			{% if not comment_list %}
+				<h4>No comments.  Be brave, be the first!</h4>
+			{% endif %}
+			
+			{% for comment in comment_list %}
+				{% if comment.is_public %} 
+					<div class="comment_{% cycle even,odd %}" id="c{{ comment.id }}">
+						<div class="date-container">
+							<span class="date-name">{{ comment.person_name|escape|urlizetrunc:"40" }}</span>
+							<span class="date-year">{{ comment.submit_date|date:"M d Y" }}</span><br />
+							<span class="date-year">{{ comment.submit_date|date:"P  " }}</span><br />
+							<span class="date-year">(<a href="/report/{{dirt_object.dirtword}}_{{comment.id}}" class="report" rel="nofollow">Report Comment</a>)</span>
+						</div>
+						<div class="comment-container">
+							<span class="comnum">#{{ forloop.counter }}</span>
+							{{ comment.comment|escape|urlizetrunc:40|linebreaks }}
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		
+			{% render_comment_form for dirty.dirt dirt_object.id %}
+			{% endif %}
+		</div>
+	</div>
+	<div id="rightContainer">
+		{% if form %}
+			<script>
+				var RecaptchaOptions = {
+				   theme : 'white',
+				   tabindex : 2
+				};
+			</script>
+			<form action="/submit/" method="post" name="adddirt">
+				<ul class="NoBulletNoIndent">{{ form }}</ul>
+				{% if errorlist_captcha %}
+					<ul class="errorlist"><li>This field is required.</li></ul>
+				{% endif %}
+		        {{ html_captcha|safe }}
+				<br />
+				<input type="image" src="http://www.colddirt.com/images/adddirt.png" name="submit_action" value="Submit" />
+			</form>
+		{% endif %}
+	</div>
+{% endblock %}

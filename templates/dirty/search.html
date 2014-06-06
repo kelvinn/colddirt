@@ -1,0 +1,22 @@
+{% extends "dirty/dirt_list.html" %}
+
+{% block title %}Cold Dirt | Admit Your Cold Dirt{% endblock %}
+
+{% block searcher %}
+	<b>Simple Search:</b>
+	<form id="search" action="." method="get" accept-charset="utf-8">
+	  	{% if q %}
+	        <input class="form-highlight" type="text" name="q" onFocus="this.value=''" value="{{ q }}">
+		{% else %}
+			<input class="form-highlight" type="text" name="q" onFocus="this.value=''" value="Keyword, Tag, URL, etc.,">
+		{% endif %}
+		<br /><br />
+		<input type="image" src="http://www.colddirt.com/images/search.png" name="Search" value="Search" />
+	</form>
+	<br />
+	{{ block.super }}  
+{% endblock %}
+
+{% block dirt-content %}
+	{{ block.super }} 
+{% endblock %}

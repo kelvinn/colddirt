@@ -1,0 +1,20 @@
+{% if display_form %}
+	<form action="/comments/post/" method="post">
+		<ul class="NoBulletNoIndent">
+			<li>
+				<label for="id_person_name">Your name: </label>
+				<input type="text" id="id_person_name" name="person_name" class="form-highlight" />
+			</li>
+			<li>
+				<label for="id_comment">Comment:</label>
+				<textarea name="comment" id="id_comment" rows="5" cols="60" class="form-highlight"></textarea>
+				<input type="hidden" name="options" value="{{ options }}" />
+				<input type="hidden" name="target" value="{{ target }}" /> 
+				<input type="hidden" name="gonzo" value="{{ hash }}" />
+				<input type="hidden" name="url" value="{{ request.get_full_path }}" />
+				<p>
+					<input type="submit" name="post" value="Post" />
+				</p>
+		</ul>
+	</form>
+{% endif %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Cold Dirt | The Sinful Aggregator{% endblock %}
+{% block to_head %}
+	<link rel="alternate" type="application/rss+xml" title="That's dirty..." href="/feeds/newdirt/" />
+{% endblock %}
+{% block content %}
+	<div id="leftContainer">
+		{% block dirt-content %}
+			{% if q and dirty_list %}
+			<div class="row_clear">
+				<h3>These dirts match your search for: <span class="bigblue">{{ q }}</span></h3>
+			</div>
+			{% endif %}
+			{% if dirty_list %}
+				{% for dirt_item in dirty_list %}
+					<div class="row_clear">
+						<span class="dirtyword">
+							<a href="/dirtword/{{ dirt_item.dirtword }}/">{{ dirt_item.dirtword }}</a>				
+						</span>
+						<span class="dirtydate">
+							Submitted at {{ dirt_item.publish_date }}<br />
+						</span>
+						<div class="dirtydesc">
+							{{ dirt_item.description }}<br />
+						</div>
+						<div class="dirtytags">
+							{% for tag in dirt_item.tags.all %}
+					  		    {% ifnotequal forloop.counter 1 %} | {% endifnotequal %}<a href="/tag/{{ tag.slug }}/">{{ tag.name }}</a> 
+							{% endfor %}
+						</div>
+					</div>
+				{% endfor %}
+			{% endif %}
+			{% if q and not dirty_list %}
+				<div class="row_clear">
+					<h3>Our search monkeys looked for <span class="bigblue">{{ q }}</span> everywhere, but couldn't find it.</h3>
+				</div>
+			{% endif %}
+			{% if is_paginated %}
+		        <div id="pageNavigation">
+		            {% if has_previous %} <a  href="?page={{previous}}" class="pagenav" title="Prev">Prev</a> | {% endif %}
+					{% if has_next %}<a href="?page={{next}}" class="pagenav" title="Next">Next</a> {% endif %}
+		            <br />
+		            Page {{ page }} of {{ pages }}
+		            
+		        </div>
+    		{% endif %}
+		{% endblock %}
+	</div>
+
+	<div id="rightContainer">
+		{% block searcher %}{% endblock %}
+		{% if form %}
+			<script>
+				var RecaptchaOptions = {
+				   theme : 'white',
+				   tabindex : 2
+				};
+			</script>
+			<form action="/" method="post" name="adddirt">
+				<ul class="NoBulletNoIndent">{{ form }}</ul>
+				{% if errorlist_captcha %}
+					<ul class="errorlist"><li>This field is required.</li></ul>
+				{% endif %}
+		        {{ html_captcha|safe }}
+				<br />
+				<input type="image" src="http://www.colddirt.com/images/adddirt.png" name="submit_action" value="Submit" />
+			</form>
+		{% endif %}
+	</div>
+{% endblock %}
+

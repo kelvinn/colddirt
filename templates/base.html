@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta name="verify-v1" content="7wNNE5U7HoNsSLBDItwOGg0RjGdAzcTxa5IdmvwtVsE=" />
+	<link href="http://www.colddirt.com/css/general.css" rel="stylesheet" type="text/css"/>
+	{% block to_head %}{% endblock %}
+</head>
+<body>
+	<div id="contentContainer">
+		<div id="mainContent">
+			<div id="header"></div>
+			<div id="menu">
+				<a href="/yourdirt/">Your Dirt</a>
+				<a href="/newest/">Newest</a>
+				<a href="/random/">Random</a>
+				<a href="/live/">Live</a>
+				<a href="/search/">Search</a>
+				<a href="/tag/">Tag Cloud</a>
+				<a href="/huh/">Huh?</a>
+			</div>
+		 		{% block content %}{% endblock %}
+			<div id="clear"></div>
+		</div>
+		
+	</div>
+	<div id="footer">
+		<a href="http://media.kelvinism.com/code/colddirt.tar.gz">Source</a> |
+		<a href="http://www.kelvinism.com/tech-blog/colddirt-information/">Notes</a><br />
+		Made by <a href="http://www.kelvinism.com">Kelvin</a> | </a>Banner by <a href="http://www.kelvinism.com/blog/taiwan/cheers-mark/">Formal</a><br />
+		Powered by <a href="http://www.djangoproject.com">Django</a>
+	</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-786228-5";
+urchinTracker();
+</script>
+</body>
+</html>

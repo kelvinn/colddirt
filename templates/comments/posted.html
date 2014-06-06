@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Colddirt | Comment Submitted{% endblock %}
+{% block content %}
+    <div id="leftContainer">
+        <div class="row_clear">
+            <div class="dirtywordbig">Comment Submitted Successfully</div>
+            <div class="dirtydesc">
+            	However, it may take a few minutes to clear my spam filter and show up in cache.
+            </div>
+		</div>
+	</div>
+    <div id="rightContainer">
+        {% if form %}
+            <script>
+                var RecaptchaOptions = {
+                   theme : 'white',
+                   tabindex : 2
+                };
+            </script>
+            <form action="/submit/" method="post" name="adddirt">
+                <ul class="NoBulletNoIndent">{{ form }}</ul>
+                {% if errorlist_captcha %}
+                    <ul class="errorlist"><li>This field is required.</li></ul>
+                {% endif %}
+                {{ html_captcha|safe }}
+                <br />
+                <input type="image" src="http://www.colddirt.com/images/adddirt.png" name="submit_action" value="Submit" />
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
+

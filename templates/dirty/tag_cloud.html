@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Cold Dirt | Tag Cloud{% endblock %}
+{% block to_head %}
+	<link rel="alternate" type="application/rss+xml" title="That's dirty..." href="/feeds/newdirt/" />
+{% endblock %}
+{% block content %}
+	<div id="leftContainer">
+		<div id="tagcloud">
+     		{% for tags in populartags %}
+    			<span class="tagpercent{% widthratio tags.tagcount maxtagcount 100 %} inline normal"><a href="/tag/{{ tags.slug|escape }}">{{ tags.name|escape }}</a></span>
+    		{% endfor %}
+		</div>
+    </div>
+	<div id="rightContainer">
+		{% if form %}
+			<script>
+				var RecaptchaOptions = {
+				   theme : 'white',
+				   tabindex : 2
+				};
+			</script>
+			<form action="/" method="post" name="adddirt">
+				<ul class="NoBulletNoIndent">{{ form }}</ul>
+				{% if errorlist_captcha %}
+					<ul class="errorlist"><li>This field is required.</li></ul>
+				{% endif %}
+		        {{ html_captcha|safe }}
+				<br />
+				<input type="image" src="http://www.colddirt.com/images/adddirt.png" name="submit_action" value="Submit" />
+			</form>
+		{% endif %}
+	</div>
+{% endblock %}
+
+

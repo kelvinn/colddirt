@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Cold Dirt | The Sinful Aggregator{% endblock %}
+{% block to_head %}
+	<link rel="alternate" type="application/rss+xml" title="That's dirty..." title="RSS" href="/feeds/newdirt/" />
+	<script src="http://www.colddirt.com/javascripts/prototype.js" type="text/javascript"></script>
+	<script src="http://www.colddirt.com/javascripts/dirty.js" type="text/javascript"></script>
+	<script src="http://www.colddirt.com/javascripts/scriptaculous.js" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+	<div id="leftContainer">
+		<div class="row_clearsm">
+			This dirt list is updated automatically.
+			<span id="pl" class="tab" onclick="ld.playFunc(); this.style.color = 'black'; $('st').style.color = '#CCC';">Play</span>
+			<span id="st" class="tab" onclick="ld.stopFunc(); this.style.color = 'black'; $('pl').style.color = '#CCC';" style="margin-right:0; color:#CCCCCC">Pause</span>	
+		</div>
+		{% block dirt-content %}
+		<noscript>
+    	Javascript is required to view live dirt submissions.
+  		</noscript>
+			<div id="livedirts">
+				<div id="hold_0" class="row_clear"></div>
+				<div id="hold_1" class="row_clear"></div>
+				<div id="hold_2" class="row_clear"></div>
+				<div id="hold_3" class="row_clear"></div>
+				<div id="hold_4" class="row_clear"></div>	
+				<div id="hold_5" class="row_clear"></div>
+				<div id="hold_6" class="row_clear"></div>
+				<div id="hold_7" class="row_clear"></div>
+				<div id="hold_8" class="row_clear"></div>
+				<div id="hold_9" class="row_clear"></div>		
+			</div>
+		{% endblock %}
+	</div>
+	<div id="rightContainer">
+		{% block searcher %}{% endblock %}
+		{% if form %}
+			<script>
+				var RecaptchaOptions = {
+				   theme : 'white',
+				   tabindex : 2
+				};
+			</script>
+			<form action="/" method="post" name="adddirt">
+				<ul class="NoBulletNoIndent">{{ form }}</ul>
+				{% if errorlist_captcha %}
+					<ul class="errorlist"><li>This field is required.</li></ul>
+				{% endif %}
+		        {{ html_captcha|safe }}
+				<br />
+				<input type="image" src="http://www.colddirt.com/images/adddirt.png" name="submit_action" value="Submit" />
+			</form>
+		{% endif %}
+	</div>
+{% endblock %}
+
